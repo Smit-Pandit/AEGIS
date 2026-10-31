@@ -1,3 +1,6 @@
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || ""
+).replace(/\/$/, "");
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -77,10 +80,10 @@ export default function App() {
   // Fetch Health & Sources on load
   const loadInitialData = async (targetCorpus = corpusId) => {
     try {
-      const hRes = await fetch(`/api/health?corpus_id=${encodeURIComponent(targetCorpus)}`);
+      const hRes = await fetch(`${API_BASE_URL}/api/health?corpus_id=${encodeURIComponent(targetCorpus)}`);
       if (hRes.ok) setHealth(await hRes.json());
 
-      const sRes = await fetch(`/api/sources?corpus_id=${encodeURIComponent(targetCorpus)}`);
+      const sRes = await fetch(`${API_BASE_URL}/api/sources?corpus_id=${encodeURIComponent(targetCorpus)}`);
       if (sRes.ok) {
         const sData = await sRes.json();
         setSources(sData.sources || []);
@@ -109,7 +112,7 @@ export default function App() {
     if (filterType !== 'all') metadataFilter['metadata.source_type'] = filterType;
 
     try {
-      const res = await fetch('/api/investigate', {
+      const res = await fetch(`${API_BASE_URL}/api/investigate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +157,7 @@ export default function App() {
     setSelectedCitation(citation);
     setActiveTab('citation');
     try {
-      const res = await fetch(`/api/sources/${encodeURIComponent(citation.source_id)}?corpus_id=${encodeURIComponent(corpusId)}`);
+      const res = await fetch(`${API_BASE_URL}/api/sources/${encodeURIComponent(citation.source_id)}?corpus_id=${encodeURIComponent(corpusId)}`);
       if (res.ok) {
         const data = await res.json();
         setRawSourceData(data);
@@ -167,7 +170,7 @@ export default function App() {
   // Select a raw document directly from left corpus
   const handleSelectSource = async (source) => {
     try {
-      const res = await fetch(`/api/sources/${encodeURIComponent(source.source_id)}?corpus_id=${encodeURIComponent(corpusId)}`);
+      const res = await fetch(`${API_BASE_URL}/api/sources/${encodeURIComponent(source.source_id)}?corpus_id=${encodeURIComponent(corpusId)}`);
       if (res.ok) {
         const data = await res.json();
         setRawSourceData(data);
@@ -211,7 +214,7 @@ export default function App() {
     formData.append('source_type', file.name.match(/\.(png|jpg|jpeg|webp)$/i) ? 'visual_telemetry' : 'custom_upload');
 
     try {
-      const res = await fetch('/api/upload', {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -234,7 +237,7 @@ export default function App() {
   const handleClearAll = async () => {
     if (!window.confirm(`Wipe documents in corpus '${corpusId}' from MongoDB?`)) return;
     try {
-      const res = await fetch(`/api/clear-all?corpus_id=${encodeURIComponent(corpusId)}`, { method: 'POST' });
+      const res = await fetch(`${API_BASE_URL}/api/clear-all?corpus_id=${encodeURIComponent(corpusId)}`, { method: 'POST' });
       if (res.ok) {
         await loadInitialData(corpusId);
         setInvestigation(null);

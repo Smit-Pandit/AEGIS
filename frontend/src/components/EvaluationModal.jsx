@@ -10,7 +10,7 @@ export default function EvaluationModal({ isOpen, onClose }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/evaluate');
+      const res = await fetch(`${API_BASE_URL}/api/evaluate`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setEvalData(data);
