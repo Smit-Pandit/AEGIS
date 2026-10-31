@@ -1,0 +1,71 @@
+
+# ==========================================
+# ENVIRONMENT VARIABLES & SECRETS
+# ==========================================
+.env
+.env.*
+!.env.example
+!.env.*.example
+# ==========================================
+# PYTHON
+# ==========================================
+hackathon/
+tests/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+ENV/
+pip-wheel-metadata/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.pyright/
+.pyre/
+htmlcov/
+.coverage
+.coverage.*
+# ==========================================
+# NODE.JS / FRONTEND
+# ==========================================
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+.next/
+.nuxt/
+.parcel-cache/
+.turbo/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==========================================
+# LOGS
+# ==========================================
+*.log
+logs/
+
+# ==========================================
+# GENERATED DATA / RUNTIME FILES
+# ==========================================
+uploads/
+temp/
+tmp/
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# IDE / EDITOR
+# ==========================================
+.idea/
+*.swp
+*.swo
